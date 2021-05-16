@@ -2777,6 +2777,30 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "PlaneLocation.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/PlaneLocation.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PlaneLocation.Domain.dll": {}
+        }
+      },
+      "PlaneLocation.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.6",
+          "PlaneLocation.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/PlaneLocation.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PlaneLocation.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -8910,6 +8934,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "PlaneLocation.Domain/1.0.0": {
+      "type": "project",
+      "path": "../PlaneLocation.Domain/PlaneLocation.Domain.csproj",
+      "msbuildProject": "../PlaneLocation.Domain/PlaneLocation.Domain.csproj"
+    },
+    "PlaneLocation.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../PlaneLocation.Infrastructure/PlaneLocation.Infrastructure.csproj",
+      "msbuildProject": "../PlaneLocation.Infrastructure/PlaneLocation.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8917,7 +8951,8 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.6",
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.13",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.6",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5",
+      "PlaneLocation.Infrastructure >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -8949,7 +8984,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\.net projects\\PlaneLocation\\PlaneLocation.Infrastructure\\PlaneLocation.Infrastructure.csproj": {
+              "projectPath": "D:\\.net projects\\PlaneLocation\\PlaneLocation.Infrastructure\\PlaneLocation.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

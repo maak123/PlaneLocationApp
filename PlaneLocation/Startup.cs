@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PlaneLocation.Data;
+using PlaneLocation.Infrastructure.Data;
 
 namespace PlaneLocation
 {
@@ -26,7 +26,7 @@ namespace PlaneLocation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<PlaneDetailsContext>(options =>
+            services.AddDbContext<AppDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PlaneDetailsContext")));
         }
 

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PlaneLocation.Domain.PlaneDetails
 {
-    class PlaneDetails
+    public class PlaneDetails
     {
         public int Id { get; set; }
         public string Make { get; set; }

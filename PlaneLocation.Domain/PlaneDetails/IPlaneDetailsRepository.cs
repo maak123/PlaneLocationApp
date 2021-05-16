@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PlaneLocation.Domain.PlaneDetails
 {
-    interface IPlaneDetailsRepository:IGenericRepository<PlaneDetails>
+    public interface IPlaneDetailsRepository:IGenericRepository<PlaneDetails>
     {
     }
 }
