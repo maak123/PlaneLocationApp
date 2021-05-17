@@ -5,24 +5,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PlaneLocation.Data;
-using PlaneLocation.Models;
+using PlaneLocation.Domain.Resources;
 
 namespace PlaneLocation.Controllers
 {
     public class PlaneDetailsController : Controller
     {
-        private readonly PlaneDetailsContext _context;
+       
 
-        public PlaneDetailsController(PlaneDetailsContext context)
+        public PlaneDetailsController()
         {
-            _context = context;
         }
 
         // GET: PlaneDetails
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PlaneDetails.ToListAsync());
+            return View();
         }
 
         // GET: PlaneDetails/Details/5
@@ -33,14 +31,8 @@ namespace PlaneLocation.Controllers
                 return NotFound();
             }
 
-            var planeDetails = await _context.PlaneDetails
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (planeDetails == null)
-            {
-                return NotFound();
-            }
 
-            return View(planeDetails);
+            return View();
         }
 
         // GET: PlaneDetails/Create
@@ -56,14 +48,9 @@ namespace PlaneLocation.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Make,Model,Registration,Location,DateAndTime,ImagePath")] PlaneDetails planeDetails)
+        public async Task<IActionResult> Create(PlaneDetailsResource planeDetails)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(planeDetails);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            
             return View(planeDetails);
         }
 
@@ -75,12 +62,8 @@ namespace PlaneLocation.Controllers
                 return NotFound();
             }
 
-            var planeDetails = await _context.PlaneDetails.FindAsync(id);
-            if (planeDetails == null)
-            {
-                return NotFound();
-            }
-            return View(planeDetails);
+            
+            return View();
         }
 
         /// <summary>
@@ -91,30 +74,18 @@ namespace PlaneLocation.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,Registration,Location,DateAndTime,ImagePath")] PlaneDetails planeDetails)
+        public async Task<IActionResult> Edit(PlaneDetailsResource planeDetails)
         {
-            if (id != planeDetails.Id)
-            {
-                return NotFound();
-            }
-
+            
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(planeDetails);
-                    await _context.SaveChangesAsync();
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PlaneDetailsExists(planeDetails.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -133,14 +104,8 @@ namespace PlaneLocation.Controllers
                 return NotFound();
             }
 
-            var planeDetails = await _context.PlaneDetails
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (planeDetails == null)
-            {
-                return NotFound();
-            }
-
-            return View(planeDetails);
+           
+            return View();
         }
 
         // POST: PlaneDetails/Delete/5
@@ -148,15 +113,10 @@ namespace PlaneLocation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var planeDetails = await _context.PlaneDetails.FindAsync(id);
-            _context.PlaneDetails.Remove(planeDetails);
-            await _context.SaveChangesAsync();
+           
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PlaneDetailsExists(int id)
-        {
-            return _context.PlaneDetails.Any(e => e.Id == id);
-        }
+      
     }
 }

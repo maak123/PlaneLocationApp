@@ -1,0 +1,13 @@
+D:\.net projects\PlaneLocation\PlaneLocation.Business\bin\Debug\netcoreapp3.1\PlaneLocation.Business.deps.json
+D:\.net projects\PlaneLocation\PlaneLocation.Business\bin\Debug\netcoreapp3.1\PlaneLocation.Business.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Business\bin\Debug\netcoreapp3.1\PlaneLocation.Business.pdb
+D:\.net projects\PlaneLocation\PlaneLocation.Business\bin\Debug\netcoreapp3.1\PlaneLocation.Domain.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Business\bin\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Business\bin\Debug\netcoreapp3.1\PlaneLocation.Domain.pdb
+D:\.net projects\PlaneLocation\PlaneLocation.Business\bin\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.pdb
+D:\.net projects\PlaneLocation\PlaneLocation.Business\obj\Debug\netcoreapp3.1\PlaneLocation.Business.csprojAssemblyReference.cache
+D:\.net projects\PlaneLocation\PlaneLocation.Business\obj\Debug\netcoreapp3.1\PlaneLocation.Business.AssemblyInfoInputs.cache
+D:\.net projects\PlaneLocation\PlaneLocation.Business\obj\Debug\netcoreapp3.1\PlaneLocation.Business.AssemblyInfo.cs
+D:\.net projects\PlaneLocation\PlaneLocation.Business\obj\Debug\netcoreapp3.1\PlaneLocation.Business.csproj.CopyComplete
+D:\.net projects\PlaneLocation\PlaneLocation.Business\obj\Debug\netcoreapp3.1\PlaneLocation.Business.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Business\obj\Debug\netcoreapp3.1\PlaneLocation.Business.pdb

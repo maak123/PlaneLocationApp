@@ -1,5 +1,11 @@
 D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\bin\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.deps.json
 D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\bin\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\bin\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.pdb
+D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\bin\Debug\netcoreapp3.1\PlaneLocation.Domain.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\bin\Debug\netcoreapp3.1\PlaneLocation.Domain.pdb
 D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\obj\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.csprojAssemblyReference.cache
 D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\obj\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.AssemblyInfoInputs.cache
 D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\obj\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.AssemblyInfo.cs
+D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\obj\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.csproj.CopyComplete
+D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\obj\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Infrastructure\obj\Debug\netcoreapp3.1\PlaneLocation.Infrastructure.pdb

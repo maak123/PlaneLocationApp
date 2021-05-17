@@ -1,0 +1,8 @@
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\bin\Debug\netcoreapp3.1\PlaneLocation.Domain.deps.json
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\bin\Debug\netcoreapp3.1\PlaneLocation.Domain.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\bin\Debug\netcoreapp3.1\PlaneLocation.Domain.pdb
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.AssemblyInfoInputs.cache
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.AssemblyInfo.cs
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.dll
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.pdb
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.csprojAssemblyReference.cache

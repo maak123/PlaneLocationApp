@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,7 +10,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PlaneLocation.Business.Core;
+using PlaneLocation.Business.Services;
+using PlaneLocation.Domain.Interfaces;
+using PlaneLocation.Domain.PlaneDetails;
+using PlaneLocation.Domain.Resources;
 using PlaneLocation.Infrastructure.Data;
+using PlaneLocation.Infrastructure.Repositories;
 
 namespace PlaneLocation
 {
@@ -28,6 +35,20 @@ namespace PlaneLocation
             services.AddControllersWithViews();
             services.AddDbContext<AppDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PlaneDetailsContext")));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+           
+            MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.CreateMap<PlaneDetailsResource, PlaneDetails>();
+                mc.CreateMap<PlaneDetails, PlaneDetailsResource>();
+
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddScoped<IPlaneDetailsRepository, PlaneDetailsRepository>();
+            services.AddScoped<IPlaneDetailsService, PlaneDetailService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

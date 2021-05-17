@@ -4,36 +4,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PlaneLocation.Data;
-using PlaneLocation.Models;
+using PlaneLocation.Business.Core;
+using PlaneLocation.Domain.Resources;
 
 namespace PlaneLocation.Controllers
 {
     public class ApiController : Controller
     {
-        private readonly PlaneDetailsContext _context;
-
-        public ApiController(PlaneDetailsContext context)
+        private readonly IPlaneDetailsService _planeDetailService;
+        public ApiController(IPlaneDetailsService planeDetailService)
         {
-            _context = context;
+            _planeDetailService = planeDetailService;
         }
 
         // GET: PlaneDetails
         public async Task<IActionResult> Index()
         {
-            return Ok(await _context.PlaneDetails.ToListAsync());
+            return Ok(await _planeDetailService.GetAllAsync());
         }
 
         // GET: PlaneDetails/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var planeDetails = await _context.PlaneDetails
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var planeDetails = await _planeDetailService.GetByIdAsync(id);
+                
             if (planeDetails == null)
             {
                 return NotFound();
@@ -42,45 +41,28 @@ namespace PlaneLocation.Controllers
             return Ok(planeDetails);
         }
 
-        // GET: PlaneDetails/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         /// <summary>
-        /// create plane
+        /// create
         /// </summary>
         /// <param name="planeDetails"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Make,Model,Registration,Location,DateAndTime,ImagePath")] PlaneDetails planeDetails)
+        public async Task<IActionResult> Create(PlaneDetailsResource planeDetails)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(planeDetails);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var result = await _planeDetailService.CreateAsync(planeDetails);
+
+                return Ok(result);
+
+            }catch(Exception e)
+            {
+                throw; 
             }
-            return Ok(planeDetails);
         }
 
-        // GET: PlaneDetails/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var planeDetails = await _context.PlaneDetails.FindAsync(id);
-            if (planeDetails == null)
-            {
-                return NotFound();
-            }
-            return Ok(planeDetails);
-        }
+       
 
         /// <summary>
         /// PlaneDetails/Edit/5
@@ -90,72 +72,28 @@ namespace PlaneLocation.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,Registration,Location,DateAndTime,ImagePath")] PlaneDetails planeDetails)
+        public async Task<IActionResult> Edit(PlaneDetailsResource planeDetails)
         {
-            if (id != planeDetails.Id)
+            try
             {
-                return NotFound();
-            }
+                var result = await _planeDetailService.EditAsync(planeDetails);
 
-            if (ModelState.IsValid)
+                return Ok(result);
+
+            }
+            catch (Exception e)
             {
-                try
-                {
-                    _context.Update(planeDetails);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PlaneDetailsExists(planeDetails.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                throw;
             }
-            return Ok(planeDetails);
-        }
-
-        /// <summary>
-        /// PlaneDetails/Delete/5
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var planeDetails = await _context.PlaneDetails
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (planeDetails == null)
-            {
-                return NotFound();
-            }
-
-            return View(planeDetails);
         }
 
         // POST: PlaneDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<bool> DeleteConfirmed(int id)
         {
-            var planeDetails = await _context.PlaneDetails.FindAsync(id);
-            _context.PlaneDetails.Remove(planeDetails);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return await _planeDetailService.RemoveAsync(id);
         }
 
-        private bool PlaneDetailsExists(int id)
-        {
-            return _context.PlaneDetails.Any(e => e.Id == id);
-        }
     }
 }

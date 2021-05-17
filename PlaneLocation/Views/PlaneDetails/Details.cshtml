@@ -1,60 +1,60 @@
-﻿@model PlaneLocation.Models.PlaneDetails
+﻿@*@model int
 
-@{
-    ViewData["Title"] = "Details";
-}
-
+    @{
+        ViewData["Title"] = "Details";
+    }*@
+@{ ViewBag.Title = "Home Page"; }
 <h1>Details</h1>
 
 <div>
     <h4>PlaneDetails</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Make)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Make)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Model)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Registration)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Registration)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateAndTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateAndTime)
-        </dd>
+    @*<dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Make)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Make)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Model)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Registration)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Registration)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DateAndTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateAndTime)
+            </dd>
 
-    </dl>
+        </dl>*@
 
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImagePath, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <img src="@Url.Content(Model.ImagePath)" style="margin:10px" height="200" width="200" id="imagePreview" />
-                <input type="file" name="ImageUpload" accept="image/jpeg, image/png" onchange="ShowImagePreview(this,document.getElementById('imagePreview'))" />
+    @*<div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImagePath, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <img src="@Url.Content(Model.ImagePath)" style="margin:10px" height="200" width="200" id="imagePreview" />
+                    <input type="file" name="ImageUpload" accept="image/jpeg, image/png" onchange="ShowImagePreview(this,document.getElementById('imagePreview'))" />
+                </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>*@ |
     <a asp-action="Index">Back to List</a>
 </div>
 
