@@ -4,6 +4,7 @@ using PlaneLocation.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PlaneLocation.Infrastructure.Repositories
 {
@@ -14,5 +15,10 @@ namespace PlaneLocation.Infrastructure.Repositories
         }
 
         public AppDBContext AppDbContext => context as AppDBContext;
+
+        public async Task CompleteAsync()
+        {
+            await context.SaveChangesAsync();
+        }
     }
 }

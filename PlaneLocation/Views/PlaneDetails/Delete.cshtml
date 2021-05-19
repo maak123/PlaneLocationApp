@@ -1,1 +1,94 @@
-﻿@{ ViewBag.Title = "Home Page"; }
+﻿@model int
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+
+<h3>Are you sure you want to delete this Sighting?</h3>
+<div>
+    <hr />
+
+    <form asp-action="Delete">
+        <dl class="row">
+            <dt class="col-sm-2">
+                Make
+            </dt>
+            <dd class="col-sm-10" data-bind="text: Make">
+
+            </dd>
+            <dt class="col-sm-2">
+                Model
+            </dt>
+            <dd class="col-sm-10" data-bind="text: Model">
+
+            </dd>
+            <dt class="col-sm-2">
+                Registration
+            </dt>
+            <dd class="col-sm-10" data-bind="text: Registration">
+
+            </dd>
+            <dt class="col-sm-2">
+                Location
+            </dt>
+            <dd class="col-sm-10" data-bind="text: Location">
+
+            </dd>
+            <dt class="col-sm-2">
+                Date And Time
+            </dt>
+            <dd class="col-sm-10" data-bind="text: DateAndTime">
+
+            </dd>
+
+        </dl>
+        <button class="btn btn-danger mr-2 pr-2" data-bind="click: remove"> Remove</button>
+        <a asp-action="Index" id="backtolst">Back to List</a>
+    </form>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var url = window.location.href;
+            var array = url.split('/');
+
+            var planeId = array[array.length - 1];
+            var viewModel = {
+                remove: function () {
+                    $.ajax({
+                        url: '/api/Delete/' + planeId,
+                        type: 'POST',
+                        //data: planeId,//ko.toJSON(this),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            alert('removed Successfullly');
+                            document.getElementById('backtolst').click();
+                        },
+                        datatype: "json",
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+                }
+                // Data
+            };
+
+            $.ajax({
+                url: "/api/Details/" + planeId,
+                dataType: 'json'
+            }).done(function (data) {
+                viewModel.Make = ko.observable(data.make),
+                    viewModel.Model = ko.observable(data.model),
+                    viewModel.Registration = ko.observable(data.registration),
+                    viewModel.Location = ko.observable(data.location),
+                    viewModel.DateAndTime = ko.observable(data.dateAndTime)
+                ko.applyBindings(viewModel);
+            }).error(function () {
+               
+            });
+        });
+    </script>
+}

@@ -31,6 +31,7 @@ namespace PlaneLocation.Business.Services
             {
                 var updatedDetails = mapper.Map<PlaneDetailsResource, PlaneDetails>(planeDetails);
                 var result = await _planeDetailsRepository.AddAsync(updatedDetails);
+                await _planeDetailsRepository.CompleteAsync();
                 return mapper.Map<PlaneDetails, PlaneDetailsResource>(result);
             }
             catch (Exception e)
@@ -46,6 +47,8 @@ namespace PlaneLocation.Business.Services
                 var updatedDetails = mapper.Map<PlaneDetailsResource, PlaneDetails>(planeDetails);
 
                 var result = await _planeDetailsRepository.UpdateAsync(updatedDetails, updatedDetails.Id);
+                await _planeDetailsRepository.CompleteAsync();
+
                 return mapper.Map<PlaneDetails, PlaneDetailsResource>(result);
             }
             catch (Exception e)
@@ -86,6 +89,7 @@ namespace PlaneLocation.Business.Services
             {
                 var planeDetails = await _planeDetailsRepository.FindAsync(ent => ent.Id == id);
                 _planeDetailsRepository.Delete(planeDetails);
+                await _planeDetailsRepository.CompleteAsync();
 
                 return true;
 

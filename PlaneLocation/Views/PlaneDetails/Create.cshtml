@@ -1,74 +1,84 @@
-﻿@{ ViewBag.Title = "Home Page"; }
-<h1>Create</h1>
-
-<h4>PlaneDetails</h4>
+﻿    @{ ViewBag.Title = "Home Page"; }
+<h4>Add Plane Details</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @*<form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Make" class="control-label"></label>
-                    <input asp-for="Make" class="form-control" />
-                    <span asp-validation-for="Make" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Model" class="control-label"></label>
-                    <input asp-for="Model" class="form-control" />
-                    <span asp-validation-for="Model" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Registration" class="control-label"></label>
-                    <input asp-for="Registration" class="form-control" />
-                    <span asp-validation-for="Registration" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Location" class="control-label"></label>
-                    <input asp-for="Location" class="form-control" />
-                    <span asp-validation-for="Location" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DateAndTime" class="control-label"></label>
-                    <input asp-for="DateAndTime" class="form-control" />
-                    <span asp-validation-for="DateAndTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ImagePath" class="control-label"></label>
-                    <input asp-for="ImagePath" class="form-control" />
-                    <span asp-validation-for="ImagePath" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>*@
+        <form>
+            <div class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Make</label>
+                <input data-bind="value: make" class="form-control" maxlength="128"/>
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Model</label>
+                <input data-bind="value:model" class="form-control" maxlength="128"/>
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Registration</label>
+                <input data-bind="value:registration" class="form-control" maxlength="8" pattern="/^[A-Z0-9]{2}(-)?[A-Z0-9]{7}$/" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Location</label>
+                <input data-bind="value:location" class="form-control"  maxlength="255"/>
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">DateAndTime</label>
+                <input type="datetime-local" id="dateAndTime" name="dateAndTime" data-bind="value:dateAndTime" max="2019-02-20T12:30:55" step="60" class="form-control">
+                @*<input data-bind="value:dateAndTime" class="form-control" />*@
+                <span class="text-danger"></span>
+            </div>
+   
+        </form>
 
-
-        <p>Make: <input data-bind="value: Make" /></p>
-        <p>Model: <input data-bind="value: Model" /></p>
-        <p>Registration: <span data-bind="text: Registration"></span></p>
-        <p>Location: <span data-bind="text: Location"></span></p>
-
+        <button  class="btn btn-primary" data-bind="click: save">Save</button>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" id="backtolst">Back to List</a>
+    
 </div>
 
 @section Scripts {
-    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
 
-    <script>
+    <script type="text/javascript">
 
-        $(document).ready(function () {
-            var PlaneDetails = {
-                Make: "T314CE",
-                Model: "Taylor 314ce",
-                Registration: 1199.95,
-                Location: "weqwe"
-            };
-            ko.applyBindings(PlaneDetails);
-        });
+        var today = new Date();
+        document.getElementById("dateAndTime").setAttribute("max", today);
+    
+        var viewModel = {
+            // Data
+                dateAndTime:  ko.observable(),
+                id: ko.observable(0),
+                image: ko.observable(""),
+                location: ko.observable(),
+                make: ko.observable(),
+                model: ko.observable(),
+                registration: ko.observable(),
+
+            save: function () {
+                    $.ajax({
+                        url: '/api/Create',
+                        type: 'POST',
+                        data: ko.toJSON(this),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            alert("Added Successfully");
+                            document.getElementById('backtolst').click();
+                        },
+                        datatype: "json",
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+                }
+    };
+
+    ko.applyBindings(viewModel);
     </script>
 }

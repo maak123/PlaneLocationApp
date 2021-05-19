@@ -17,13 +17,13 @@ namespace PlaneLocation.Controllers
             _planeDetailService = planeDetailService;
         }
 
-        // GET: PlaneDetails
+        // GET: api
         public async Task<IActionResult> Index()
         {
             return Ok(await _planeDetailService.GetAllAsync());
         }
 
-        // GET: PlaneDetails/Details/5
+        // GET: api/Details/5
         public async Task<IActionResult> Details(int id)
         {
             if (id == null)
@@ -41,14 +41,9 @@ namespace PlaneLocation.Controllers
             return Ok(planeDetails);
         }
 
-        /// <summary>
-        /// create
-        /// </summary>
-        /// <param name="planeDetails"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PlaneDetailsResource planeDetails)
+        // api/Create
+        [HttpPost, ActionName("Create")]
+        public async Task<IActionResult> Create([FromBody]PlaneDetailsResource planeDetails)
         {
             try
             {
@@ -64,15 +59,10 @@ namespace PlaneLocation.Controllers
 
        
 
-        /// <summary>
-        /// PlaneDetails/Edit/5
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="planeDetails"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(PlaneDetailsResource planeDetails)
+       // api/Edit/5
+        [HttpPost, ActionName("Edit")]
+        
+        public async Task<IActionResult> Edit([FromBody]PlaneDetailsResource planeDetails)
         {
             try
             {
@@ -87,9 +77,9 @@ namespace PlaneLocation.Controllers
             }
         }
 
-        // POST: PlaneDetails/Delete/5
+        // POST: api/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public async Task<bool> DeleteConfirmed(int id)
         {
             return await _planeDetailService.RemoveAsync(id);

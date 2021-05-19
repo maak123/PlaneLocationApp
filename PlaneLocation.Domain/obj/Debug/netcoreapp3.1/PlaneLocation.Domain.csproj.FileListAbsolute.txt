@@ -6,3 +6,4 @@ D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\Plan
 D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.dll
 D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.pdb
 D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.csprojAssemblyReference.cache
+D:\.net projects\PlaneLocation\PlaneLocation.Domain\obj\Debug\netcoreapp3.1\PlaneLocation.Domain.csproj.ResolveComReference.cache

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace PlaneLocation.Domain.PlaneDetails
 {
@@ -17,5 +19,10 @@ namespace PlaneLocation.Domain.PlaneDetails
         public DateTime DateAndTime { get; set; }
         [DisplayName("Image")]
         public string ImagePath { get; set; }
+        public PlaneDetails()
+        {
+            ImagePath = "~/AppFiles/Images/default.png";
+        }
     }
+
 }

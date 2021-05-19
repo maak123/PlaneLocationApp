@@ -1,77 +1,78 @@
-﻿@*@model int
+﻿@model int
 
-    @{
-        ViewData["Title"] = "Details";
-    }*@
-@{ ViewBag.Title = "Home Page"; }
-<h1>Details</h1>
 
 <div>
-    <h4>PlaneDetails</h4>
+    <h4>View Plane Details</h4>
     <hr />
-    @*<dl class="row">
+    <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Make)
+               Make
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Make)
+            <dd class="col-sm-10" data-bind="text: Make">
+                
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Model)
+               Model
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Model)
+            <dd class="col-sm-10" data-bind="text: Model">
+                
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Registration)
+               Registration
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Registration)
+            <dd class="col-sm-10" data-bind="text: Registration">
+                
+            </dd>
+            <dt class="col-sm-2" >
+                Location
+            </dt>
+            <dd class="col-sm-10" data-bind="text: Location">
+               
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Location)
+                Date And Time
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Location)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DateAndTime)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DateAndTime)
+            <dd class="col-sm-10" data-bind="text: DateAndTime">
+                
             </dd>
 
-        </dl>*@
-
-    @*<div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(model => model.ImagePath, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <img src="@Url.Content(Model.ImagePath)" style="margin:10px" height="200" width="200" id="imagePreview" />
-                    <input type="file" name="ImageUpload" accept="image/jpeg, image/png" onchange="ShowImagePreview(this,document.getElementById('imagePreview'))" />
-                </div>
-            </div>
-        </div>*@
+        </dl>  
+    <div class="col-md-6">
+    </div>
 </div>
 <div>
-    @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>*@ |
+    @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |*@
     <a asp-action="Index">Back to List</a>
 </div>
 
 @section scripts{
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
 
 
     <script>
         $(document).ready(function () {
-            var product = {
-                itemNumber: "T314CE",
-                model: "Taylor 314ce",
-                salePrice: 1199.95,
-                forecasts: true
-            };
-            ko.applyBindings(product);
+            var viewModel = {
+             
+            // Data
+           };
+       var url = window.location.href;
+        var array = url.split('/');
+
+        var planeId = array[array.length - 1];
+        $.ajax({
+            url: "/api/Details/"+planeId,
+            dataType: 'json'
+        }).done(function (data) {
+              viewModel.Make= ko.observable(data.make),
+                 viewModel.Model= ko.observable(data.model),
+                 viewModel.Registration= ko.observable(data.registration),
+                 viewModel.Location= ko.observable(data.location),
+                 viewModel.DateAndTime= ko.observable(data.dateAndTime)
+                 viewModel.image = ko.observable(data.image)
+            ko.applyBindings(viewModel);
+
+        }).error(function () {
+        });
         });
     </script>
 }

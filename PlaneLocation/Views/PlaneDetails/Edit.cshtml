@@ -1,59 +1,108 @@
-﻿@*@model int
+﻿@model int
 
-    @{
-        ViewData["Title"] = "Edit";
-    }*@
+@{
+    ViewData["Title"] = "Edit";
+}
 @{ ViewBag.Title = "Home Page"; }
-<h1>Edit</h1>
 
-<h4>PlaneDetails</h4>
+<h4>Update Plane Details</h4>
 <hr />
 <div class="row">
-    @*<div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <label asp-for="Make" class="control-label"></label>
-                    <input asp-for="Make" class="form-control" />
-                    <span asp-validation-for="Make" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Model" class="control-label"></label>
-                    <input asp-for="Model" class="form-control" />
-                    <span asp-validation-for="Model" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Registration" class="control-label"></label>
-                    <input asp-for="Registration" class="form-control" />
-                    <span asp-validation-for="Registration" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Location" class="control-label"></label>
-                    <input asp-for="Location" class="form-control" />
-                    <span asp-validation-for="Location" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DateAndTime" class="control-label"></label>
-                    <input asp-for="DateAndTime" class="form-control" />
-                    <span asp-validation-for="DateAndTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ImagePath" class="control-label"></label>
-                    <input asp-for="ImagePath" class="form-control" />
-                    <span asp-validation-for="ImagePath" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>*@
+    <div class="col-md-4">
+        <form>
+            <div class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Make</label>
+                <input data-bind="value: make" class="form-control" maxlength="128" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Model</label>
+                <input data-bind="value:model" class="form-control" maxlength="128" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Registration</label>
+                <input data-bind="value:registration" class="form-control" maxlength="8" pattern="/^[A-Z0-9]{2}(-)?[A-Z0-9]{7}$/" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Location</label>
+                <input data-bind="value:location" class="form-control" maxlength="255" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">DateAndTime</label>
+                <input type="datetime-local" id="dateAndTime" name="dateAndTime" data-bind="value:dateAndTime" max="2019-02-20T12:30:55" step="60" class="form-control">
+                @*<input data-bind="value:dateAndTime" class="form-control" />*@
+                <span class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary" data-bind="click: update">Update</button>
+
+        </form>
+    </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" id="backtolst">Back to List</a>
+
 </div>
 
 @section Scripts {
-    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            var url = window.location.href;
+        var array = url.split('/');
+
+        var planeId = array[array.length - 1];
+            var viewModel = {
+                dateAndTime:  ko.observable(),
+                id: ko.observable(parseInt(planeId)),
+                image: ko.observable(""),
+                location: ko.observable(),
+                make: ko.observable(),
+                model: ko.observable(),
+                registration: ko.observable(),
+
+            update: function () {
+                    $.ajax({
+                        url: '/api/Edit',
+                        type: 'POST',
+                        data: ko.toJSON(this),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            alert("Updated Successfully");
+                            document.getElementById('backtolst').click();
+
+                        },
+                        datatype: "json",
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+                }
+            
+           };
+       
+        $.ajax({
+            url: "/api/Details/"+planeId,
+            dataType: 'json'
+        }).done(function (data) {
+                 viewModel.make= ko.observable(data.make),
+                 viewModel.model= ko.observable(data.model),
+                 viewModel.registration= ko.observable(data.registration),
+                 viewModel.location= ko.observable(data.location),
+                 viewModel.dateAndTime= ko.observable(data.dateAndTime)
+            ko.applyBindings(viewModel);
+
+        }).error(function (jqXHR, textStatus) {
+            // Just show the error status
+            alert(jqXHR.status)
+        });
+        });
+    </script>
+
 }

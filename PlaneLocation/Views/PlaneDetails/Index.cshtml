@@ -2,7 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add new Sighting</a>
     </p>
     <table class="table">
         <thead>
@@ -20,11 +20,9 @@
                     Location
                 </th>
                 <th>
-                    DateAndTime
+                    Date And Time
                 </th>
-                <th>
-                    ImagePath
-                </th>
+               
                 <th></th>
             </tr>
         </thead>
@@ -41,16 +39,15 @@
                 </td>
                 <td data-bind="text: dateAndTime">
                 </td>
-                <td data-bind="text: image">
-                </td>
+               
                 <td>
-                    <a data-bind="attr: { href:  '/PlaneDetails/Edit/'+ id }">
+                    <a class="pr-2" data-bind="attr: { href:  '/PlaneDetails/Edit/'+ id }">
                         Edit
                     </a>
-                    <a data-bind="attr: { href:  '/PlaneDetails/Delete/'+ id }">
+                    <a class="pr-2" data-bind="attr: { href:  '/PlaneDetails/Delete/'+ id }">
                         Delete
                     </a>
-                    <a data-bind="attr: { href:  '/PlaneDetails/Details/'+ id }">
+                    <a class="pr-2" data-bind="attr: { href:  '/PlaneDetails/Details/'+ id }">
                         Details
                     </a>
                   
@@ -69,14 +66,6 @@
 
     function getPlaneLocations() {
         var viewModel = {
-            // Data
-            friends: ko.observableArray([
-            ]),
-
-            // Operations
-            addFriend: function () { this.friends.push(new friend("Another")) },
-            removeFriend: function (friend) { this.friends.remove(friend) },
-
         };
        
         $.ajax({
@@ -87,9 +76,7 @@
             viewModel.planeLocations = ko.observableArray(data);
             ko.applyBindings(viewModel);
 
-        }).error(function (jqXHR, textStatus) {
-            // Just show the error status
-            alert(jqXHR.status)
+        }).error(function () {
         });
 
     }
