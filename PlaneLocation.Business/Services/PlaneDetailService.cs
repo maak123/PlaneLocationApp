@@ -99,5 +99,28 @@ namespace PlaneLocation.Business.Services
                 return false;
             }
         }
+        public async Task<IEnumerable<PlaneDetailsResource>> SearchAsync(string hint)
+        {
+            try
+            {
+                if(hint ==null || hint == "")
+                {
+                    IEnumerable<PlaneDetails> planeDetails = await _planeDetailsRepository.GetAllAsync();
+                    return mapper.Map<IEnumerable<PlaneDetails>, IEnumerable<PlaneDetailsResource>>(planeDetails);
+
+                }
+                else
+                {
+                    var planeDetails = await _planeDetailsRepository.FindAllAsync(ent => ent.Make == hint || ent.Model == hint || ent.Registration == hint);
+                    return mapper.Map<IEnumerable<PlaneDetails>, IEnumerable<PlaneDetailsResource>>(planeDetails);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

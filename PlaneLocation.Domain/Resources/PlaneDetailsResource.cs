@@ -12,6 +12,6 @@ namespace PlaneLocation.Domain.Resources
         public string Registration { get; set; }
         public string Location { get; set; }
         public DateTime DateAndTime { get; set; }
-        public string Image { get; set; }
+        public string ImagePath { get; set; }
     }
 }

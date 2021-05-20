@@ -1,45 +1,50 @@
 ﻿@model int
 
 
-<div>
-    <h4>View Plane Details</h4>
-    <hr />
-    <dl class="row">
-            <dt class="col-sm-2">
-               Make
-            </dt>
-            <dd class="col-sm-10" data-bind="text: Make">
-                
-            </dd>
-            <dt class="col-sm-2">
-               Model
-            </dt>
-            <dd class="col-sm-10" data-bind="text: Model">
-                
-            </dd>
-            <dt class="col-sm-2">
-               Registration
-            </dt>
-            <dd class="col-sm-10" data-bind="text: Registration">
-                
-            </dd>
-            <dt class="col-sm-2" >
-                Location
-            </dt>
-            <dd class="col-sm-10" data-bind="text: Location">
-               
-            </dd>
-            <dt class="col-sm-2">
-                Date And Time
-            </dt>
-            <dd class="col-sm-10" data-bind="text: DateAndTime">
-                
-            </dd>
+    <div>
+        <h4>View Plane Details</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-8">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        Make
+                    </dt>
+                    <dd class="col-sm-10" data-bind="text: Make">
 
-        </dl>  
-    <div class="col-md-6">
+                    </dd>
+                    <dt class="col-sm-2">
+                        Model
+                    </dt>
+                    <dd class="col-sm-10" data-bind="text: Model">
+
+                    </dd>
+                    <dt class="col-sm-2">
+                        Registration
+                    </dt>
+                    <dd class="col-sm-10" data-bind="text: Registration">
+
+                    </dd>
+                    <dt class="col-sm-2">
+                        Location
+                    </dt>
+                    <dd class="col-sm-10" data-bind="text: Location">
+
+                    </dd>
+                    <dt class="col-sm-2">
+                        Date And Time
+                    </dt>
+                    <dd class="col-sm-10" data-bind="text: DateAndTime">
+
+                    </dd>
+
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <img width="100px" height="100px" data-bind="attr:{src: imagePath}" />
+            </div>
+        </div>
     </div>
-</div>
 <div>
     @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |*@
     <a asp-action="Index">Back to List</a>
@@ -63,12 +68,12 @@
             url: "/api/Details/"+planeId,
             dataType: 'json'
         }).done(function (data) {
-              viewModel.Make= ko.observable(data.make),
+                 viewModel.Make= ko.observable(data.make),
                  viewModel.Model= ko.observable(data.model),
                  viewModel.Registration= ko.observable(data.registration),
                  viewModel.Location= ko.observable(data.location),
-                 viewModel.DateAndTime= ko.observable(data.dateAndTime)
-                 viewModel.image = ko.observable(data.image)
+                 viewModel.DateAndTime= ko.observable(data.dateAndTime.replace('T', ' ')),
+                 viewModel.imagePath = ko.observable(data.imagePath==""?"/images/default.jpg":"/images/"+data.imagePath)
             ko.applyBindings(viewModel);
 
         }).error(function () {

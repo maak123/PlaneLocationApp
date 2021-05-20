@@ -19,10 +19,7 @@ namespace PlaneLocation.Domain.PlaneDetails
         public DateTime DateAndTime { get; set; }
         [DisplayName("Image")]
         public string ImagePath { get; set; }
-        public PlaneDetails()
-        {
-            ImagePath = "~/AppFiles/Images/default.png";
-        }
+        
     }
 
 }

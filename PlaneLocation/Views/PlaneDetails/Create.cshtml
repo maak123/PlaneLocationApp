@@ -1,4 +1,4 @@
-﻿    @{ ViewBag.Title = "Home Page"; }
+﻿@{ ViewBag.Title = "Home Page"; }
 <h4>Add Plane Details</h4>
 <hr />
 <div class="row">
@@ -7,12 +7,12 @@
             <div class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Make</label>
-                <input data-bind="value: make" class="form-control" maxlength="128"/>
+                <input data-bind="value: make" class="form-control" maxlength="128" />
                 <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Model</label>
-                <input data-bind="value:model" class="form-control" maxlength="128"/>
+                <input data-bind="value:model" class="form-control" maxlength="128" />
                 <span class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Location</label>
-                <input data-bind="value:location" class="form-control"  maxlength="255"/>
+                <input data-bind="value:location" class="form-control" maxlength="255" />
                 <span class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -31,54 +31,88 @@
                 @*<input data-bind="value:dateAndTime" class="form-control" />*@
                 <span class="text-danger"></span>
             </div>
-   
-        </form>
 
-        <button  class="btn btn-primary" data-bind="click: save">Save</button>
+        </form>
+        <form id="upload" action="Upload" enctype="multipart/form-data" onsubmit="AJAXSubmit(this);return false;"
+              method="post">
+            <input type="file" name="fileUpload" id="fileUpload" />
+
+            <input class="btn" type="submit" value="Upload" />
+            <div style="margin-top:15px">
+                <output name="result"></output>
+            </div>
+        </form>
+      
+        <button class="btn btn-primary" data-bind="click: save">Save</button>
     </div>
 </div>
 
 <div>
     <a asp-action="Index" id="backtolst">Back to List</a>
-    
+
 </div>
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
+        <script type="text/javascript">
 
-    <script type="text/javascript">
-
+       
         var today = new Date();
         document.getElementById("dateAndTime").setAttribute("max", today);
-    
+
         var viewModel = {
             // Data
-                dateAndTime:  ko.observable(),
-                id: ko.observable(0),
-                image: ko.observable(""),
-                location: ko.observable(),
-                make: ko.observable(),
-                model: ko.observable(),
-                registration: ko.observable(),
+            dateAndTime: ko.observable(),
+            id: ko.observable(0),
+            imagePath: ko.observable(""),
+            location: ko.observable(),
+            make: ko.observable(),
+            model: ko.observable(),
+            registration: ko.observable(),
 
             save: function () {
-                    $.ajax({
-                        url: '/api/Create',
-                        type: 'POST',
-                        data: ko.toJSON(this),
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {
-                            alert("Added Successfully");
-                            document.getElementById('backtolst').click();
-                        },
-                        datatype: "json",
-                        error: function () {
-                            alert("error");
-                        }
-                    });
-                }
-    };
+                $.ajax({
+                    url: '/api/Create',
+                    type: 'POST',
+                    data: ko.toJSON(this),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert("Added Successfully");
+                        document.getElementById('backtolst').click();
+                    },
+                    datatype: "json",
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+        };
+         async function AJAXSubmit(oFormElement) {
+            var resultElement = oFormElement.elements.namedItem("result");
+            var formdata = new FormData();
+            var fileInput = document.getElementById('fileUpload');
+            for (i = 0; i < fileInput.files.length; i++) {
+                formdata.append("files", fileInput.files[i]);
+            }
+            try {
+                const response = await fetch('../api/Upload', {
+                    method: 'POST',
+                    body:   formdata 
+                });
 
-    ko.applyBindings(viewModel);
+                if (response.ok) {
+                    var text = JSON.parse(await response.text());
+                    console.log(text);
+                    viewModel.imagePath =  ko.observable(text);
+                }
+
+                resultElement.value = 'Result: ' + response.status + ' ' +
+                response.statusText;
+            } catch (error) {
+                console.error('Error file upload');
+            }
+        }
+   
+        ko.applyBindings(viewModel);
     </script>
 }

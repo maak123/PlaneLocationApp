@@ -13,6 +13,7 @@ namespace PlaneLocation.Business.Core
         Task<PlaneDetailsResource> CreateAsync(PlaneDetailsResource device);
         Task<PlaneDetailsResource> EditAsync(PlaneDetailsResource device);
         Task<Boolean> RemoveAsync(int id);
+        Task<IEnumerable<PlaneDetailsResource>> SearchAsync(string hint);
 
     }
 }
