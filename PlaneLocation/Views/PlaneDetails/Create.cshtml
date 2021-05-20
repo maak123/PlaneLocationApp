@@ -33,17 +33,21 @@
             </div>
 
         </form>
+        <button class="btn btn-primary" data-bind="click: save">Save</button>
+
+    </div>
+    <div class="col-md-8">
         <form id="upload" action="Upload" enctype="multipart/form-data" onsubmit="AJAXSubmit(this);return false;"
               method="post">
             <input type="file" name="fileUpload" id="fileUpload" />
 
-            <input class="btn" type="submit" value="Upload" />
+            <input class="btn btn-primary" type="submit" value="Upload" />
             <div style="margin-top:15px">
                 <output name="result"></output>
+                <img width="100px" height="100px" data-bind="attr:{src: imageViewPath}" />
             </div>
         </form>
       
-        <button class="btn btn-primary" data-bind="click: save">Save</button>
     </div>
 </div>
 
@@ -65,6 +69,7 @@
             dateAndTime: ko.observable(),
             id: ko.observable(0),
             imagePath: ko.observable(""),
+            imageViewPath: ko.observable("/images/default.jpg"),
             location: ko.observable(),
             make: ko.observable(),
             model: ko.observable(),
@@ -103,11 +108,13 @@
                 if (response.ok) {
                     var text = JSON.parse(await response.text());
                     console.log(text);
-                    viewModel.imagePath =  ko.observable(text);
+                    viewModel.imagePath = ko.observable(text);
+                    viewModel.imageViewPath("/images/" + text);
+
                 }
 
-                resultElement.value = 'Result: ' + response.status + ' ' +
-                response.statusText;
+               // resultElement.value = 'Result: ' + response.status ==  + ' ' +
+               // response.statusText;
             } catch (error) {
                 console.error('Error file upload');
             }
