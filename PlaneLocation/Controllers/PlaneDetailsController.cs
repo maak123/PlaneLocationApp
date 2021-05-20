@@ -11,7 +11,6 @@ namespace PlaneLocation.Controllers
 {
     public class PlaneDetailsController : Controller
     {
-       
 
         public PlaneDetailsController()
         {
@@ -41,19 +40,6 @@ namespace PlaneLocation.Controllers
             return View();
         }
 
-        /// <summary>
-        /// create plane
-        /// </summary>
-        /// <param name="planeDetails"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PlaneDetailsResource planeDetails)
-        {
-            
-            return View(planeDetails);
-        }
-
         // GET: PlaneDetails/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -61,35 +47,8 @@ namespace PlaneLocation.Controllers
             {
                 return NotFound();
             }
-
             
             return View();
-        }
-
-        /// <summary>
-        /// PlaneDetails/Edit/5
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="planeDetails"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(PlaneDetailsResource planeDetails)
-        {
-            
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(planeDetails);
         }
 
         /// <summary>
@@ -104,19 +63,8 @@ namespace PlaneLocation.Controllers
                 return NotFound();
             }
 
-           
             return View();
         }
 
-        // POST: PlaneDetails/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-           
-            return RedirectToAction(nameof(Index));
-        }
-
-      
     }
 }
