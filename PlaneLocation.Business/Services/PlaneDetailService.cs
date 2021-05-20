@@ -103,7 +103,7 @@ namespace PlaneLocation.Business.Services
         {
             try
             {
-                if(hint ==null || hint == "")
+                if (hint == null || hint == "")
                 {
                     IEnumerable<PlaneDetails> planeDetails = await _planeDetailsRepository.GetAllAsync();
                     return mapper.Map<IEnumerable<PlaneDetails>, IEnumerable<PlaneDetailsResource>>(planeDetails);
@@ -111,9 +111,9 @@ namespace PlaneLocation.Business.Services
                 }
                 else
                 {
-                    var planeDetails = await _planeDetailsRepository.FindAllAsync(ent => ent.Make == hint || ent.Model == hint || ent.Registration == hint);
+                    var planeDetails = await _planeDetailsRepository.FindAllAsync(ent => ent.Make.Contains(hint) || ent.Model.Contains(hint) || ent.Registration.Contains(hint));
                     return mapper.Map<IEnumerable<PlaneDetails>, IEnumerable<PlaneDetailsResource>>(planeDetails);
-
+                    // Where(p => p.Name.Contains("SearchValue") || p.Description.Contains("SearchValue"));
                 }
 
             }

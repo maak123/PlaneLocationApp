@@ -113,7 +113,7 @@ namespace PlaneLocation.Controllers
             return Ok(uploadedFileName);
         }
 
-        public async Task<IActionResult> Search(string hint)
+        public async Task<IActionResult> Search([FromQuery]string hint)
         {
             var planeDetails = await _planeDetailService.SearchAsync(hint);
 
